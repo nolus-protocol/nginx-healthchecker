@@ -1,0 +1,6 @@
+edition = "2021"
+max_width = 80
+newline_style = "Unix"
+trailing_comma = "Vertical"
+trailing_semicolon = true
+wrap_comments = true
