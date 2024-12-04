@@ -17,6 +17,7 @@ mod serde;
 mod service;
 mod services;
 mod state;
+mod url;
 mod writer;
 
 #[derive(Parser)]

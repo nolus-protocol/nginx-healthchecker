@@ -13,6 +13,7 @@ use crate::{
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields, rename_all = "snake_case")]
 pub(crate) struct StorageConfiguration {
+    #[serde(with = "crate::url")]
     healthcheck_url: Url,
     #[serde(deserialize_with = "deserialize_boxed_string")]
     output: Box<str>,

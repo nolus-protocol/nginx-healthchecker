@@ -26,6 +26,7 @@ pub(crate) struct Instances<T> {
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields, rename_all = "snake_case")]
 pub(crate) struct StorageConfiguration {
+    #[serde(with = "crate::url")]
     json_rpc_url: Url,
     outputs: Outputs,
 }
