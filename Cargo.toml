@@ -4,6 +4,9 @@ version = "0.0.0"
 edition = "2021"
 license = "Apache-2.0"
 
+[lints.clippy]
+incompatible_msrv = "forbid"
+
 [dependencies]
 anyhow = "1.0.89"
 clap = { version = "4.5.20", features = ["derive", "unicode"] }
