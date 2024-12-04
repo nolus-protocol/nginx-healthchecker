@@ -208,7 +208,7 @@ impl State {
     async fn write_out_service(
         output_configuration: &mut File,
         global_prepend: &str,
-        service_name: &Box<str>,
+        service_name: &str,
         service: &Service,
     ) -> Result<()> {
         output_configuration.write_all(b"\nupstream ").await?;
