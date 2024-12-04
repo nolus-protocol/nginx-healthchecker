@@ -9,15 +9,15 @@ rust-version = "1.76.0"
 incompatible_msrv = "forbid"
 
 [dependencies]
-anyhow = "1.0.89"
-clap = { version = "4.5.20", features = ["derive", "unicode"] }
+anyhow = "1.0.94"
+clap = { version = "4.5.22", features = ["derive", "unicode"] }
 futures = { version = "0.3.31", default-features = false, features = ["std"] }
-reqwest = { version = "0.12.8", default-features = false, features = ["brotli", "charset", "deflate", "gzip", "http2", "json", "macos-system-configuration", "rustls-tls-webpki-roots", "zstd"] }
-serde = { version = "1.0.210", features = ["derive"] }
-serde_json = "1.0.128"
-tokio = { version = "1.40.0", features = ["fs", "macros", "rt-multi-thread", "signal", "time"] }
-tracing = { version = "0.1.40", features = ["max_level_debug", "release_max_level_debug"] }
-tracing-subscriber = { version = "0.3.18", features = ["local-time"] }
+reqwest = { version = "0.12.9", default-features = false, features = ["brotli", "charset", "deflate", "gzip", "http2", "json", "macos-system-configuration", "rustls-tls-webpki-roots", "zstd"] }
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
+tokio = { version = "1.42.0", features = ["fs", "macros", "rt-multi-thread", "signal", "time"] }
+tracing = { version = "0.1.41", features = ["max_level_debug", "release_max_level_debug"] }
+tracing-subscriber = { version = "0.3.19", features = ["local-time"] }
 
 [profile.dev.build-override]
 codegen-units = 1
