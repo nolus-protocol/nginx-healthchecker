@@ -164,10 +164,11 @@ impl Instances {
             writer.write_out_prepended(prepend).await?;
         }
 
-        for output in instances.iter().filter_map(|instance| {
-            matches!(instance.enabled(), Status::Enabled)
-                .then(|| instance.configuration().output())
-        }) {
+        for output in instances
+            .iter()
+            .filter(|instance| matches!(instance.enabled(), Status::Enabled))
+            .map(|instance| instance.configuration().output())
+        {
             healthy_instances += 1;
 
             writer.write_out_entry(output).await?;
