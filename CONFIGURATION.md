@@ -1,0 +1,43 @@
+# Dynamic configuration
+## Top-level fields
+| Field             | Required to be present | Nullable | Value type     | Description                                                                                                                                                                                                                                                                                                                                                                        |
+|-------------------|------------------------|----------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `refresh_seconds` | Yes                    | No       | Integer number | Refresh period in seconds.<br />Dictates the periods, after the elapse of each, to run the healthchecks on each service's upstreams.                                                                                                                                                                                                                                               |
+| `verbose_output`  | Yes                    | No       | Boolean        | Dictates whether the utility should just report which service upstreams are down and once when they go up again, or always report the state of all service upstreams.                                                                                                                                                                                                              |
+| `prepend`         | No                     | No       | String         | A global, static \(non-interpreted\), content to prepend to each service in the output configuration that is fed to NGINX.<br />**Note:** The field does not require the final semi-colon to be put, as it is automatically added. Because it is not interpreted in any way it is required to put the semi-colons between different attributes, if more than one is to be applied. |
+| `services`        | Yes                    | No       | Object         | An object mapping service names to their definitions.<br />**Example value:** `{ "services": { "example_dot_com": { ... } }, ...}`                                                                                                                                                                                                                                                 |
+
+### `services`
+| Field       | Required to be present | Nullable | Value type | Description                                                            |
+|-------------|------------------------|----------|------------|------------------------------------------------------------------------|
+| `<service>` | Yes                    | No       | Object     | An object containing information about the service and it's upstreams. |
+
+### `services.<service>`
+| Field       | Required to be present | Nullable | Value type | Description                                                                                                                                                                                                                                                           |
+|-------------|------------------------|----------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`      | Yes                    | No       | String     | Identifies the type of the healthcheck provider.<br />Currently the supported providers are:<br /><ul><li>\[`"generic_200_ok"`\] Generic HTTP request, expecting response with status code `200 Ok`,</li><li>\[`"node"`\] Tendermint-compatible chain node.</li></ul> |
+| `instances` | Yes                    | No       | Object     | An object mapping instance names to their definitions.                                                                                                                                                                                                                |
+
+### `services.<service>.instances`
+| Field        | Required to be present | Nullable | Value type | Description                                                                      |
+|--------------|------------------------|----------|------------|----------------------------------------------------------------------------------|
+| `<instance>` | Yes                    | No       | Object     | An object containing information about healthchecking and the output to produce. |
+
+### `services.<service>{type="generic_200_ok"}.instances.<instance>`
+| Field             | Required to be present | Nullable | Value type | Description                                                                                                                                                                                                                                                                                                                                                   |
+|-------------------|------------------------|----------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `healthcheck_url` | Yes                    | No       | String     | Full URL \(schema included, e.g.: `https://`\) to which to send the requests.                                                                                                                                                                                                                                                                                 |
+| `output`          | Yes                    | No       | String     | A static \(non-interpreted\) value to produce when writing out output configuration that is fed to NGINX.<br/>**Note:** The field does not require the final semi-colon to be put, as it is automatically added. Because it is not interpreted in any way it is required to put the semi-colons between different statements, if more than one is to be used. |
+
+### `services.<service>{type="node"}.instances.<instance>`
+| Field          | Required to be present | Nullable | Value type | Description                                                                                                                    |
+|----------------|------------------------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `json_rpc_url` | Yes                    | No       | String     | Base URL \(schema included, e.g.: `https://`\) to which to send the JSON-RPC Tendermint-specific requests.                     |
+| `outputs`      | Yes                    | No       | Object     | An object mapping the static \(non-interpreted\) values to produce when writing out output configuration that is fed to NGINX. |
+
+### `services.<service>{type="node"}.instances.<instance>.outputs`
+| Field      | Required to be present | Nullable | Value type | Description                                                                                                                 |
+|------------|------------------------|----------|------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `lcd`      | Yes                    | No       | String     | A static \(non-interpreted\) value to produce for the upstream entry in the LCD group of the service, `<service>_lcd`.      |
+| `json_rpc` | Yes                    | No       | String     | A static \(non-interpreted\) value to produce for the upstream entry in the JSON-RPC group of the service, `<service>_rpc`. |
+| `grpc`     | Yes                    | No       | String     | A static \(non-interpreted\) value to produce for the upstream entry in the gRPC group of the service, `<service>_grpc`.    |
