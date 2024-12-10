@@ -25,12 +25,12 @@ This project provides a simple and effective way to monitor the health of servic
 2. Build
   * Portable.
     ```shell
-    cargo build --release
+    cargo build --jobs "1" --release
     ```
   * Non-portable, allowing more optimizations and targetting host CPU features.
     ```shell
     RUSTFLAGS="-C target-cpu=native" \
-      cargo build --release
+      cargo build --jobs "1" --release
     ```
 
 The built executable is located at: `./target/release/nginx-healthchecker`.
@@ -40,6 +40,7 @@ The built executable is located at: `./target/release/nginx-healthchecker`.
   ```shell
   cargo \
     install \
+    --jobs "1" \
     --git "https://github.com/nolus-protocol/nginx-healthchecker.git"
   ```
 * Non-portable, allowing more optimizations and targetting host CPU features.
@@ -47,6 +48,7 @@ The built executable is located at: `./target/release/nginx-healthchecker`.
   RUSTFLAGS="-C target-cpu=native" \
     cargo \
       install \
+      --jobs "1" \
       --git "https://github.com/nolus-protocol/nginx-healthchecker.git"
   ```
 
